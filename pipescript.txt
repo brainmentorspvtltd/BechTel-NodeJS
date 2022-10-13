@@ -7,21 +7,20 @@ pipeline {
         
     stage('Git') {
       steps {
-        git 'https://github.com/****/****'
+        git 'https://github.com/brainmentorspvtltd/BechTel-NodeJS/tree/main/order-service'
       }
     }
      
     stage('Build') {
       steps {
-        sh 'npm install'
-         sh '<<Build Command>>'
-      }
+        sh 'npm install --save-dev'
+       }
     }  
     
             
     stage('Test') {
       steps {
-        sh 'node test'
+        sh 'npm run test'
       }
     }
   }
