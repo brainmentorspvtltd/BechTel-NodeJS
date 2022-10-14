@@ -1,0 +1,53 @@
+Mail Config and Templates
+
+
+const nodemailer = require('nodemailer');
+function sendMail(senderAddress, recieverAddress, subject, plainText, html='', attachFile=''){
+    // Handle for one file only
+
+    let mailOptions = {
+        from: senderAddress, // sender address
+        to: recieverAddress, // list of receivers
+        subject: subject, // Subject line
+        text: plainText, // plain text body
+        html: html // html body
+    };
+    // Usually Attachment is to send the Bill Invoice
+    if(attachFile){
+        const attachments =  [
+            {   // utf-8 string as an attachment
+                path:attachFile,
+                filename: 'invoice.pdf'
+
+
+            }
+        ];
+        mailOptions.attachments= attachments;
+    }
+    let transporter = nodemailer.createTestAccount((err, account) => {
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+            user: ‘Ur’MailId,
+            pass: 'fhgdgdh'
+        }
+        });
+
+
+});
+
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.log("Mail NOT Send ERROR.....",error);
+        response.send("Can't Send Mail , Some Error");
+        //return console.log(error);
+    }
+    console.log("Mail Send SuccessFully.....");
+   response.send("Mail Send SuccessFully.....");
+});
+
+
+
+}
+module.exports = sendMail;
