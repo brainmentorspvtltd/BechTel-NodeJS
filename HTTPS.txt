@@ -1,0 +1,13 @@
+
+￼
+var options = {
+  key: fs.readFileSync('test/fixtures/keys/agent2-key.pem'),
+  cert: fs.readFileSync('test/fixtures/keys/agent2-cert.cert')
+};
+
+const express = require('express');
+const app = express();
+var httpsServer = https.createServer(credentials, app);
+httpsServer.listen(443, (err)=>{
+
+});
