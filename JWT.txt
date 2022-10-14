@@ -1,0 +1,40 @@
+JWT Token Handling
+
+const tokenOperations = require("../utils/token");
+
+module.exports = function(request, response, next){
+    let authToken = request.header('tokenid');
+    if(authToken){
+        let result = tokenOperations.verifyToken(authToken);
+        if(result){
+            next();
+        }
+        else{
+            response.status(401).json({message:'Authorization Failed, Invalid or No Token'});
+        }
+    }
+    else{
+        response.status(401).json({message:'Authorization Failed, Invalid or No Token'});
+    }
+}
+
+Step-1 npm I jsonwebtoken
+
+token.js
+const jwt = require('jsonwebtoken');
+const tokenOperations = {
+    secret:'thisisthesecretkey', // maintain env file
+    createToken(emailId){
+        let tokenId = jwt.sign({'userid':'emailId'},this.secret,{expiresIn:'1h'});
+        console.log('Token is ',tokenId);
+        return tokenId;
+    },
+    verifyToken(tokenId){
+        let decode = jwt.verify(tokenId, this.secret);
+        if(decode && decode.userid){
+                return true;
+        }
+        return false;
+    }
+}
+module.exports = tokenOperations;
